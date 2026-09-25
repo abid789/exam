@@ -1,0 +1,512 @@
+One.step = Forecasts$forecasts[,nstart+1]
+One.step
+Predict = Forecasts$forecasts[2, 91:100]
+data1
+##Prediction Interval Calculation
+One.step = Forecasts$forecasts[,nstart+1]
+One.step
+Forecasts$forecasts
+Predict
+Predict = Forecasts$forecasts[2, 91:100]
+Forecasts$pred.var
+stdv = sqrt(Forecasts$pred.var[2,2,])
+stdv
+stdv = sqrt(Forecasts$pred.var[2,2,])
+upper.lim = Predict + stdv*1.645
+upper.lim = Predict + stdv*1.645
+lower.lim = Predict - stdv*1.645
+Predict
+data1
+stdv
+Forecasts$pred.var
+Forecasts$pred.var[2,2,]
+lower.lim = Predict - stdv*1.645
+##Prediction Interval Calculation
+Year = data1[91:100,]
+One.step = Forecasts$forecasts[,nstart+1]
+Predict = Forecasts$forecasts[2, 91:100]
+##Prediction Interval Calculation
+Year = data1[91:100,1]
+Year
+Year = data1[91:100,]
+Year
+##Prediction Interval Calculation
+Year = data1[91:100,1]
+One.step = Forecasts$forecasts[,nstart+1]
+Predict = Forecasts$forecasts[2, 91:100]
+stdv = sqrt(Forecasts$pred.var[2,2,])
+upper.lim = Predict + stdv*1.645
+lower.lim = Predict - stdv*1.645
+Out = rbind(Year, Predict, upper.lim, lower.lim)
+print(out)
+print(Out)
+Forecasts$forecasts
+Forecasts$forecasts[2,]
+##Plotting and Results
+plot(data[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms")
+##Plotting and Results
+plot(data1[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms")
+##Plotting and Results
+plot(data1[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms", ylim = c(0.0, 4.1))
+##Plotting and Results
+plot(data1[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms")
+##Plotting and Results
+plot(data1[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms", ylim = c(0.0, 4.1))
+lines(data1[1:90,1], data1[1:90,2])
+lines(data1[1:90,1], data1[1:90,2], type = "p")
+lines(data1[1:90,1], data1[1:90,2], type = "p")
+lines(data1[1:100,1], data1[1:100,2], type = "p")
+lines(data1[1:100,1], data1[1:100,2], type = "p")
+plot(data1[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms", ylim = c(0.0, 4.1))
+lines(data1[1:100,1], data1[1:100,2], type = "p")
+plot(data1[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms", ylim = c(0.0, 4.1))
+lines(data1[1:90,1], data1[1:90,2], type = "p")
+install.packages("aTSA")
+library(aTSA)
+library(aTSA)
+###Engle-Granger Test
+X = matrix(rnorm(200), 100, 2)
+X
+Y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+X = matrix(rnorm(200), 100, 2)
+y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+##Test for Original Y and X
+coint.test(y, X)
+?coint.test
+coint.test(y, X, 20)
+rnorm(200)
+###Engle-Granger Test
+##H0: No Cointegration
+X = matrix(rnorm(100), 100, 2)
+y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+##Test for Original Y and X
+coint.test(y, X)
+coint.test(y, X, 20)
+##Test for Original Y and X
+coint.test(y, X)
+###Engle-Granger Test
+##H0: No Cointegration
+X = matrix(rnorm(200), 100, 2)
+y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+##Test for Original Y and X
+coint.test(y, X)
+coint.test(y, X, 20)
+source("D:/3rd Year/STAT-306 Time Series Analysis/Practical/TS/TS16(2).R", echo=TRUE)
+library(aTSA)
+library(aTSA)
+###Engle-Granger Test
+##H0: No Cointegration
+X = matrix(rnorm(200), 100, 2)
+y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+##Test for Original Y and X
+coint.test(y, X)
+coint.test(y, X, 20)
+library(aTSA)
+###Engle-Granger Test
+##H0: No Cointegration
+X = matrix(rnorm(200), 100, 2)
+y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+##Test for Original Y and X
+coint.test(y, X)
+coint.test(y, X, 20)
+library(aTSA)
+##Engle-Granger Test
+X = matrix(rnorm(200), 100, 2)
+X
+y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+coint.test(y,X)
+coint.test(y,X, d = 20)
+coint.test(y,X)
+coint.test(y,X, d = 20)
+library(aTSA)
+X = matrix(rnorm(200),100,2)
+y = 0.3*X[,1] + 1.2*X[,2] + rnorm(100)
+coint.test(y, X)
+coint.test(y, X, d = 20)
+rm(list = ls())
+library(marima)
+data("austr")
+attach(data)
+attach(austr)
+head(austr)
+View(austr)
+dim(austr)
+tail(data)
+data = austr
+series = data[1:90,]
+series
+define.model(kvar = 7, ar = 1, ma = 1, rem.var = 1, reg.var = 6:7)
+model = define.model(kvar = 7, ar = 1, ma = 1, rem.var = 1, reg.var = 6:7)
+Marima = marima(ts(series), model$ar.pattern, model$ma.pattern, penalty = 1)
+Resid = arma.filter(series, Marima$ar.estimates, Marima$ma.estimates)
+plot(Marima$residuals, Resid$residuals)
+plot(Marima$residuals, Resid$residuals)
+library(marima)
+library(marima)
+data("austr")
+head(austr)
+data = austr
+series = data[1:90,]
+model = define.model(7, 1, 1, 1, 6:7)
+Marima = marima(ts(series), model$ar.pattern, model$ma.pattern, penalty = 1)
+Resid = arma.filter(series, Marima$ar.estimates, Marima$ma.estimates)
+plot(Marima$residuals, Resid$residuals)
+########
+nstart = 90
+Forecasts = arma.forecast(ts(data), marima = Marima, nstart = 90, nstep = 10)
+Year = data[91:100,1]
+Year
+Forecasts
+Forecasts
+Predict = Forecasts$forecasts[2,91:100]
+stdv = sqrt(Forecasts$pred.var[2,2,])
+stdv
+Predict = Forecasts$forecasts[2,]
+Predict
+Predict = Forecasts$forecasts[2,91:100]
+stdv = sqrt(Forecasts$pred.var[2,2,])
+stdv
+stdv = sqrt(Forecasts$pred.var[2,2,])
+upper.lim = Predict + stdv*1.645
+upper.lim = Predict + stdv*1.645
+lower.lim = Predict - stdv*1.645
+Out = rbind(Year, Predict, upper.lim, lower.lim)
+print(Out)
+Out = cbind(Year, Predict, upper.lim, lower.lim)
+print(Out)
+Out = rbind(Year, Predict, upper.lim, lower.lim)
+print(Out)
+########
+nstart = 90
+nstep = 10
+Forecasts = arma.forecast(ts(data), marima = Marima, nstart = nstart, nstep = nstep)
+Year = data[91:100,1]
+Predict = Forecasts$forecasts[2, 91:100]
+stdv = sqrt(Forecasts$pred.var[2,2, 91:100])
+stdv = sqrt(Forecasts$pred.var[2,2,])
+upper.lim = Predict + stdv*1.645
+lower.lim = Predict - stdv*1.645
+Output = cbind(Year, Predict, upper.lim, lower.lim)
+print(Output)
+###
+plot(data[1:100, 1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", ylim = c(0.0, 4.1))
+lines(data[1:90, 1], data[1:90, 2], type = "p", col = "2", lwd = 2)
+plot(data[1:100, 1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", ylim = c(0.0, 4.1))
+lines(data[1:90, 1], data[1:90, 2], type = "p", col = "2", lwd = 2)
+plot(data[1:100, 1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", ylim = c(0.0, 4.1))
+lines(data[1:90, 1], data[1:90, 2], type = "p", col = "2", lwd = 2)
+plot(data[1:100, 1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", ylim = c(0.0, 4.1))
+lines(data[1:90, 1], data[1:90, 2], type = "p", col = "2", lwd = 2)
+###
+plot(data[1:100, 1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", , col = "1", ylim = c(0.0, 4.1))
+plot(data[1:100, 1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", , col = "1", ylim = c(0.0, 4.1))
+lines(data[1:90, 1], data[1:90, 2], type = "p", col = "2", lwd = 2)
+plot(data[1:100, 1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", , col = "3", ylim = c(0.0, 4.1))
+lines(data[1:90, 1], data[1:90, 2], type = "p", col = "2", lwd = 2)
+time = c(6,7,8,9,10,11,12,14,15,18)
+event = c(1,1,1,1,1,1,1,0,0,0)
+event = c(1,1,1,1,1,1,1,0,0,0)
+library(survival)
+model = coxph(Surv(time, status) ~ event)
+status = c(1,1,1,1,1,1,1,0,0,0)
+model = coxph(Surv(time, status) ~ event)
+model = coxph(Surv(time, status) ~ event)
+model = coxph(Surv(time, status) ~ event)
+model = coxph(Surv(time, status) ~ event)
+status = c(1,1,1,1,1,1,1,0,0,0)
+model = coxph(Surv(time, status) ~ event)
+status = c(1,1,0,1,0,1,1,0,1,1)
+time = c(12,9,15,6,18,8,10,14,7,11)
+status = c(1,1,0,1,0,1,1,0,1,1)
+event = c(1,1,0,1,0,1,1,0,1,1)
+model = coxph(Surv(time, status) ~ event)
+model = coxph(Surv(time, status) ~ event, method = "efron")
+data = data.frame(time, event)
+data
+data = data.frame(time, event)
+model = coxph(Surv(time, status) ~ event, data)
+time = c(12,9,15,6,18,8,10,14,7,11,10,14)
+library(survival)
+model = coxph(Surv(time, event) ~ event)
+time = c(12,9,15,6,18,8,10,14,7,11,10,14)
+event = c(1,1,0,1,0,1,1,0,1,1,1,0)
+model = coxph(Surv(time, event) ~ event)
+status = c(1,1,0,1,0,1,1,0,1,1,1,0)
+model = coxph(Surv(time, status) ~ event)
+library(survival)
+time = c(12,9,15,6,18,8,10,14,7,11,10,14)
+event = c(1,1,0,1,0,1,1,0,1,1,1,0)
+status = c(1,1,0,1,0,1,1,0,1,1,1,0)
+model = coxph(Surv(time, status) ~ event)
+time = c(12,9,15,6,18,8,10,14,7,11,10,14)
+event = c(1,1,0,1,0,1,1,0,1,1,1,0)
+status = c(1,1,0,1,0,1,1,0,1,1,1,0)
+model = coxph(Surv(time, status) ~ event)
+model = coxph(Surv(time, status) ~ event, method = "efron")
+library(marima)
+data("austr")
+data = austr
+data
+data1 = data[1:90,]
+data1
+?define.model
+model = define.model(kvar = 7, ar = 1, ma = 1, rem.var = 1, reg.var = 6:7)
+Marima = marima(ts(data1), model$ar.pattern, model$ma.pattern, penalty = 1)
+Marima
+Resid = arma.filter(data1, Marima$ar.estimates, Marima$ma.estimates)
+plot(Marima$residuals, Resid$residuals)
+plot(Marima$residuals, Resid$residuals, type = "l")
+library(marima)
+library(marima)
+data = austr
+series = data[1:90,]
+austr
+View(austr)
+model = define.model(kvar = 7, ar = 1, ma = 1, rem.var = 1, reg.var = 6:7)
+Marima = marima(ts(series), model$ar.pattern, model$ma.pattern, penalty = 1)
+?Marima
+?marima
+Resid = arma.filter(series, Marima$ar.estimates,Marima$ma.estimates)
+plot(Marima$residuals, Resid$residuals)
+######
+nstart = 90
+nstep = 10
+Forecasts = arma.forecast(ts(data), marima = Marima, nstart = nstart, nstep = nstep)
+Forecasts
+Year = data[91:100,1]
+Year
+Forecasts$forecasts
+Predict = Forecasts$forecasts[2,91:100]
+Predict
+Forecasts$pred.var
+stdv = sqrt(Forecasts$pred.var[2,2,])
+upper.lim = Predict + stdv*1.645
+lower.lim = Predict - stdv*1.645
+Output = cbind(Year, Predict, upper.lim, lower.lim)
+print(Output)
+Forecasts$forecasts[2,]
+plot(data[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms", ylim = c(0.0,4.1))
+lines(data[1:90,1], data[1:90,2], type = "P")
+lines(data[1:90,1], data[1:90,2], type = "p")
+plot(data[1:100,1], Forecasts$forecasts[2,], type = "l", xlab = "Year", ylab = "Rate of Armed Suicides", main = "Prediction of Suicides by Firearms", ylim = c(0.0,4.1))
+lines(data[1:90,1], data[1:90,2], type = "p")
+ARIMA = list(order = c(2,1,1), ar = c(0.65,0.2), ma = c(1.25))
+ARIMA = list(order = c(2,1,1), ar = c(0.65,0.2), ma = c(1.25))
+n = 10000
+ARIMA_sim = arima.sim(ARIMA,n)
+plot(ARIMA_sim)
+plot(ARIMA_sim)
+##
+model = arima(ARIMA_sim, order = c(2,1,1))
+model
+ARIMA = list(order = c(2,0,1), ar = c(0.65,0.2), ma = c(1.25))
+n = 10000
+ARIMA_sim = arima.sim(ARIMA,n)
+plot(ARIMA_sim)
+##
+model = arima(ARIMA_sim, order = c(2,0,1))
+model
+##
+model = arima(ARIMA_sim, order = c(2,1,1))
+ARIMA = list(order = c(2,1,1), ar = c(0.65,0.2), ma = c(1.25))
+n = 10000
+ARIMA_sim = arima.sim(ARIMA,n)
+plot(ARIMA_sim)
+##
+model = arima(ARIMA_sim, order = c(2,1,1))
+library(forecast)
+forecast(model)
+plot(forecast(model))
+plot(forecast(model), col = "red")
+plot(forecast(model), col = "red")
+plot(ARIMA_sim)
+err = rnorm(10000)
+library(spgs)
+##
+lb.test(err)
+turningpoint.test(err)
+diffsign.test(err)
+rank.test(err)
+##
+hist(err)
+qqnorm(err)
+qqline(err)
+##
+p = 1:20
+aic = c()
+for (i in 1:length(p))
+{ aic[i] = arima(err, order = c(p[i],0,0))$aic
+}
+aic
+aic
+id = which(aic == min(aic))
+id
+v = c(-2,-1,0)
+as.logical(v)
+options(colnames(x) = NULL)
+history(max.show = 25)
+history(max.show = 25)
+y = 1:9
+dim(y) = c(3,3)
+y = 1:9
+dim(y) = c(3,3)
+dim(y)
+y
+mean(pizza$week, na.rm = TRUE)
+y = c(1,2,3)
+as.character(y)
+x = NA
+y = x/1
+y
+X = c(40,30,40, 45, 55, 30)
+Y = c(50, 50, 45, 55, 60, 40)
+ks.test(X, pnorm)
+g = c(149,157,159,160,160,163,168,170,178,185)
+ks.test(g, pnorm)
+setwd("D:/3rd Year/LAB EXAM 3RD YEAR/Lab Final/307")
+data = read.table("veteran.txt")
+library(survival)
+data
+colnames(data) = c("trt", "celltype", "time", "status", "karno", "diagtime", "age", "prior")
+library(survival)
+###
+Km = survfit(Surv(time, status)~1, type = "kaplan-Meier", conf.type = "log-log")
+###
+Km = survfit(Surv(time, status)~1, type = "kaplan-Meier", conf.type = "log-log", data = data)
+###
+Km = survfit(Surv(time, status)~1, type = "kaplan-meier", conf.type = "log-log", data = data)
+summary(km)
+summary(Km)
+plot(Km, xlab = "Time", "Overall Survival Probability")
+plot(Km, xlab = "Time", ylab = "Overall Survival Probability")
+####
+filtered_data = filter(data, status == 1)
+####
+library(dplyr)
+filtered_data = filter(data, status == 1)
+filtered_data %>%
+summarize(me = median(time))
+library(dplyr)
+filtered_data = filter(data, status == 1)
+filtered_data %>%
+summarize(me = median(time))
+plot(Km, xlab = "Time", ylab = "Overall Survival Probability")
+points(62, 0.5, col = "red", pch = 16)
+plot(Km, xlab = "Time", ylab = "Overall Survival Probability")
+points(62, 0.5, col = "red", pch = 16)
+####
+survdiff(Surv(time, status)~trt, data = )
+####
+survdiff(Surv(time, status)~trt, data = data )
+###
+survfit(Surv(time, status)~celltype, data = data)
+plot(survfit(Surv(time, status)~celltype, data = data), xlab = "Time", ylab = "overall s", col = c("red", "blue", "yellow", "green"))
+legend("topright", legend = c("squams", "small", "adeno", "large"), col = c("red", "blue", "yellow", "green")
+plot(survfit(Surv(time, status)~celltype, data = data), xlab = "Time", ylab = "overall s", col = c("red", "blue", "yellow", "green"))
+legend("topright", legend = c("squams", "small", "adeno", "large"), col = c("red", "blue", "yellow", "green")
+legend("topright", legend = c("squams", "small", "adeno", "large"), col = c("red", "blue", "yellow", "green"))
+plot(survfit(Surv(time, status)~celltype, data = data), xlab = "Time", ylab = "overall s", col = c("red", "blue", "yellow", "green"))
+legend("topright", legend = c("squams", "small", "adeno", "large"), col = c("red", "blue", "yellow", "green"))
+survfit(Surv(time, status)~celltype, data = data)
+plot(survfit(Surv(time, status)~celltype, data = data), xlab = "Time", ylab = "overall s", col = c("red", "blue", "yellow", "green"))
+legend("topright", legend = c("squams", "small", "adeno", "large"), col = c("red", "blue", "yellow", "green"), lwd = 2)
+##
+coxph(Surv(time, status)~., data = data)
+##
+m = coxph(Surv(time, status)~., data = data)
+coef = coef(m)
+std = sqrt(diag(vcov(m)))
+l = exp(coef - 1.96*std)
+u = exp(coef +1.96*std)
+l
+u
+###
+cox = cox.zph(m)
+summary(cox)
+cox
+library(asaur)
+library(survival)
+data("hepatoCellular")
+cox_Os = coxph(Surv(OS, Death)~CXCL17T+CXCL17P+CXCL17N, hepatoCellular)
+summary(cox_Os)
+cox_RfS = coxph(Surv(RFS, Death)~CXCL17T+CXCL17P+CXCL17N, hepatoCellular)
+summary(cox_RfS)
+cox = coxph(Surv(OS, Death)~CXCL17P, hepatoCellular)
+summary(cox)
+library(survival)
+library(asaur)
+attach(pharmacoSmoking)
+View(pharmacoSmoking)
+##1.
+##Prentice Modification
+survdiff(Surv(ttr, relapse)~grp, rho = 1, pharmacoSmoking)
+##log Rank Test
+survdiff(Surv(ttr, relapse)~grp, pharmacoSmoking)
+plot(survfit(Surv(ttr, relapse)~grp, pharmacoSmoking), lty = 1, lwd = 2, col = c("red", "blue"), xlab = "Time", ylab = "Survival Probabilities")
+##2.
+table(pharmacoSmoking$employment)
+survdiff(Surv(ttr, relapse)~grp + strata(employment), pharmacoSmoking)
+rm(list = ls())
+library(survival)
+library(asaur)
+library(date)
+attach(pancreatic)
+View(pancreatic)
+onstudy.d = as.date(as.character(onstudy))
+progression.d = as.date(as.character(progression))
+death.d = as.date(as.character(death))
+progression_only = progression.d - onstudy.d
+overall_survival = death.d - onstudy.d
+pfs = pmin(progression_only,overall_survival)
+pfs[is.na(pfs)] = overall_survival[is.na(pfs)]
+os.month = overall_survival/30.5
+pfs.month = pfs/30.5
+##Log rank test
+survdiff(Surv(pfs.month)~stage)
+##Gehan test
+survdiff(Surv(pfs.month)~stage, rho = 1)
+##Wilcoxon test
+wilcox.test(pfs.month~stage)
+##############################################
+###Using Overall Survival
+survdiff(Surv(os.month)~stage)
+survdiff(Surv(os.month)~stage, rho = 1)
+wilcox.test(os.month~stage)
+rm(list = ls())
+setwd("D:/3rd Year/LAB EXAM 3RD YEAR/Biostatistics and Epidemiology/Lab Final")
+data = read.csv("Schizophrenia.csv", sep = ";")
+attach(data)
+View(data)
+###Kaplan Meier Estimator
+library(survival)
+KM_est = survfit(Surv(Time, Censor)~1, type = "kaplan-meier", conf.type = "log-log")
+summary(KM_est)
+plot(survfit(Surv(Time, Censor)~1),xlab = "Time", ylab = "Survival Probabilities")
+###Median Survival time
+library(dplyr)
+filtered_data = filter(data, Censor == 1)
+filtered_data %>%
+summarize(median_surv = median(Time))
+###Nelson Aalen Estimator
+NA_est = cumsum(KM_est$n.event/KM_est$n.risk)
+summary(NA_est)
+plot(KM_est, cumhaz = TRUE, xlab = "Time", ylab = "Cumulative Hazard Ratio")
+###log rank test
+log_rank = survdiff(Surv(Time, Censor)~Marital)
+Gehan = survdiff(Surv(Time, Censor)~Marital, rho = 1)
+###Cox PH Model#############
+Cox_model = coxph(Surv(Time, Censor)~., data)
+summary(Cox_model)
+###Breslow Approximation
+Cox1 = coxph(Surv(Time, Censor)~Gender, data)
+summary(Cox1)
+###Efron Approximation
+Cox2 = coxph(Surv(Time, Censor)~Gender, data, method = "efron")
+summary(Cox2)
+###Cox Approximation
+Cox3 = coxph(Surv(Time, Censor)~Gender, data, method = "exact")
+summary(Cox3)
+##Strtatification
+table(data$Age)
+Cox4 = coxph(Surv(Time, Censor)~Gender+strata(Age), data, method = "exact")
+summary(Cox4)
