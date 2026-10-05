@@ -1,0 +1,206 @@
+# Q1: DOW-JONES AND AUSTRALIAN ALL-ORDINARIES
+library(tseries)
+library(forecast)
+# Q1 (i): Read data and visualize time series
+# Data read
+data = read.table("D:/SDS/3RD YEAR/time data/djao2.txt")
+head(data)
+# দুটি series আলাদা করা
+DJ = data[,1]
+AO = data[,2]
+# Time series তৈরি
+DJ.ts = ts(DJ)
+AO.ts = ts(AO)
+# দুটি Time Series Plot
+par(mfrow = c(2,1))
+plot(DJ.ts,
+     type = "l",
+     main = "Dow-Jones Industrial Index",
+     xlab = "Trading Days",
+     ylab = "Index")
+plot(AO.ts,
+     type = "l",
+     main = "Australian All-Ordinaries Index",
+     xlab = "Trading Days",
+     ylab = "Index")
+par(mfrow = c(1,1))
+# Q1 (ii): Stationarity test
+# ADF Test
+adf.test(DJ.ts)
+adf.test(AO.ts)
+# Q1 (iii): Make the series stationary
+# Log transformation + first difference
+DJ.diff = diff(log(DJ.ts))
+AO.diff = diff(log(AO.ts))
+# Stationarity check
+adf.test(DJ.diff)
+adf.test(AO.diff)
+# Stationary series plot
+par(mfrow = c(2,1))
+plot(DJ.diff,
+     type = "l",
+     main = "Stationary Dow-Jones Series",
+     xlab = "Trading Days",
+     ylab = "Log Difference")
+plot(AO.diff,
+     type = "l",
+     main = "Stationary All-Ordinaries Series",
+     xlab = "Trading Days",
+     ylab = "Log Difference")
+par(mfrow = c(1,1))
+# Q1 (iv): Fit appropriate time series models
+# Automatic ARIMA model selection
+DJ.model = auto.arima(DJ.ts,
+                      seasonal = FALSE,
+                      stepwise = FALSE,
+                      approximation = FALSE)
+AO.model = auto.arima(AO.ts,
+                      seasonal = FALSE,
+                      stepwise = FALSE,
+                      approximation = FALSE)
+
+# Model summary
+summary(DJ.model)
+summary(AO.model)
+# Q1 (v): Diagnostic checking of fitted models
+# Residual diagnostic
+checkresiduals(DJ.model)
+checkresiduals(AO.model)
+# Ljung-Box test
+Box.test(residuals(DJ.model),
+         lag = 10,
+         type = "Ljung-Box")
+Box.test(residuals(AO.model),
+         lag = 10,
+         type = "Ljung-Box")
+# Q2 (i): AR(1), phi = -0.7
+# Simulation
+set.seed(123)
+n = 10000
+phi = -0.7
+# AR(1) process
+x = arima.sim(model = list(ar = phi),
+              n = n)
+# Estimated spectral density
+spec.pgram(x,
+           log = "no",
+           main = "Estimated Spectral Density of AR(1)",
+           xlab = "Frequency",
+           ylab = "Spectral Density")
+# Q2 (ii): Generate 1000 standard normal observations
+set.seed(123)
+# Number of observations
+n = 1000
+# Standard normal random numbers
+X = rnorm(n)
+# Exam roll last digit = 8
+# Yt = 8 + 2 = 10
+Y = rep(0, n)
+# First 100 values multiplied by 10
+Y[1:100] = 10 * X[1:100]
+# Final data
+data2 = X + Y
+# Q2 (ii): Two separate time series plots
+par(mfrow = c(2,1))
+# Plot of Xt
+plot(X,
+     type = "l",
+     main = "Time Series Plot of X_t",
+     xlab = "Time",
+     ylab = "X_t")
+# Plot of Data = X_t + Y_t
+plot(data2,
+     type = "l",
+     main = "Time Series Plot of X_t + Y_t",
+     xlab = "Time",
+     ylab = "Data")
+par(mfrow = c(1,1))
+# Q2 (ii): Estimate the time series component
+# Estimated component
+Y.hat = data2 - X
+# Plot estimated component
+plot(Y.hat,
+     type = "l",
+     main = "Estimated Time Series Component",
+     xlab = "Time",
+     ylab = "Estimated Component")
+# Data without the estimated component
+data_without_component = data2 - Y.hat
+# Plot data without component
+plot(data_without_component,
+     type = "l",
+     main = "Data Without Estimated Component",
+     xlab = "Time",
+     ylab = "Adjusted Data")
+
+
+############interpretation##########
+
+হ্যাঁ, এই code-এর জন্যও আগের মতো **short, exam-ready English interpretation** হবে:
+
+## Q1(i): Time Series Plot & Comparative Analysis
+
+**Dow-Jones:**  
+> The series shows an overall upward trend with several short-term fluctuations. Hence, the series appears to be non-stationary.
+
+**Australian All-Ordinaries:**  
+> The series also shows an upward trend with considerable fluctuations. Therefore, it appears to be non-stationary.
+
+**Comparison:**  
+> Both series show similar upward movements and strong fluctuations, indicating possible non-stationarity. However, the magnitude of fluctuations differs between the two markets.
+
+---
+
+## Q1(ii): ADF Test
+
+> The ADF test is used to examine stationarity. If the **p-value < 0.05**, we reject the null hypothesis and conclude that the series is stationary. If the **p-value > 0.05**, we fail to reject the null hypothesis and conclude that the series is non-stationary.
+
+**For your output:**  
+> Since the p-values for both series are greater than 0.05, both Dow-Jones and All-Ordinaries are **non-stationary**.
+
+---
+
+## Q1(iii): Make the Series Stationary
+
+> Log transformation followed by first differencing is applied to remove the trend and stabilize the variance. The ADF test is then performed again.
+
+**Conclusion:**  
+> If the new p-values are less than 0.05, the differenced series is considered **stationary**.
+
+---
+
+## Q1(iv): Fit Appropriate Time Series Models
+
+> Automatic ARIMA model selection is used to identify an appropriate model for each series. The model is selected based on information criteria such as AICc.
+
+**Conclusion:**  
+> The selected ARIMA models provide an appropriate representation of the temporal dependence in the Dow-Jones and All-Ordinaries series.
+
+---
+
+## Q1(v): Diagnostic Checking
+
+> Residual diagnostics are performed to check whether the fitted models are adequate. A good model should have residuals with no significant autocorrelation.
+
+**Ljung-Box Test:**  
+> If the **p-value > 0.05**, we fail to reject the null hypothesis of no autocorrelation. Therefore, the residuals are approximately white noise and the model is considered adequate.
+
+---
+
+# Q2(i): AR(1) with φ = −0.7
+
+> The AR(1) process with a negative coefficient produces alternating movements between positive and negative values. The spectral density is expected to have a peak near the **highest frequency (π)**, indicating strong high-frequency or oscillatory behavior.
+
+---
+
+# Q2(ii): \(X_t + Y_t\)
+
+> The first 100 observations are multiplied by 10, so the variance of the first 100 observations becomes much larger. After the first 100 observations, the series behaves like the original standard normal series.
+
+### Estimated Component
+
+> The estimated component is obtained as \(Y_t = (X_t+Y_t)-X_t\). It is non-zero only for the first 100 observations and becomes zero afterward.
+
+### Data Without Component
+
+> After removing the estimated component, the resulting series becomes equal to the original \(X_t\). Thus, the additional component has been successfully removed.

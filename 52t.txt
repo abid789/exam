@@ -1,0 +1,247 @@
+## STAT-306: TIME SERIES ANALYSIS
+## Accidental Deaths, USA (1973-1978)
+## Roll Number: 71
+
+library(forecast)
+library(tseries)
+
+## Q1: DATA IMPORT AND TIME SERIES PLOT
+
+deaths = read.table("D:/SDS/3RD YEAR/time data/deaths.txt",
+                    header=FALSE, comment.char="#")
+colnames(deaths) = c("Month","Year","Deaths")
+stopifnot(nrow(deaths)==72)
+
+death.data = deaths$Deaths
+death.data[72] = 9271
+
+death.ts = ts(death.data, start=c(1973,1), frequency=12)
+
+start(death.ts)
+end(death.ts)
+frequency(death.ts)
+summary(death.ts)
+
+plot(death.ts,
+     main="Monthly Accidental Deaths in USA (1973-1978)",
+     xlab="Year",
+     ylab="Number of Accidental Deaths",
+     col="blue",
+     lwd=2)
+
+abline(h=mean(death.ts), col="red", lty=6, lwd=3)
+
+
+## Q2: STATIONARITY TEST
+
+adf.original = adf.test(death.ts)
+print(adf.original)
+adf.original$p.value
+
+d = ndiffs(death.ts, test="adf")
+D = nsdiffs(death.ts)
+
+d
+D
+
+death.diff = if(D>0) {
+  diff(death.ts, lag=12, differences=D)
+} else {
+  death.ts
+}
+
+if(d>0) {
+  death.diff = diff(death.diff, differences=d)
+}
+
+adf.final = adf.test(death.diff)
+print(adf.final)
+
+
+## Q3: APPROPRIATE ARIMA MODEL SELECTION
+
+best.model = auto.arima(death.ts,
+                        seasonal=TRUE,
+                        stepwise=FALSE,
+                        approximation=FALSE,
+                        ic="aicc")
+
+print(best.model)
+summary(best.model)
+AIC(best.model)
+BIC(best.model)
+
+
+## Q4: MODEL FITTING AND INTERPRETATION
+
+fitted.values = fitted(best.model)
+
+head(cbind(Actual=as.numeric(death.ts),
+           Fitted=as.numeric(fitted.values)))
+
+model.residuals = residuals(best.model)
+summary(model.residuals)
+
+ord = arimaorder(best.model)
+fit.df = sum(ord[c("p","q","P","Q")])
+
+ljung.test = Box.test(model.residuals,
+                      lag=12,
+                      type="Ljung-Box",
+                      fitdf=fit.df)
+
+print(ljung.test)
+ljung.test$p.value
+
+
+##############inter###########
+হ্যাঁ। নিচে **extra `#` comments এবং unnecessary gaps বাদ দিয়ে clean code**, তারপর **প্রতিটি প্রশ্নের short exam-ready English interpretation** দিলাম।
+
+```r
+## STAT-306: TIME SERIES ANALYSIS
+## Accidental Deaths, USA (1973-1978)
+## Roll Number: 71
+
+library(forecast)
+library(tseries)
+
+## Q1: DATA IMPORT AND TIME SERIES PLOT
+
+deaths = read.table("D:/SDS/3RD YEAR/time data/deaths.txt",
+                    header=FALSE, comment.char="#")
+colnames(deaths) = c("Month","Year","Deaths")
+stopifnot(nrow(deaths)==72)
+
+death.data = deaths$Deaths
+death.data[72] = 9271
+
+death.ts = ts(death.data, start=c(1973,1), frequency=12)
+
+start(death.ts)
+end(death.ts)
+frequency(death.ts)
+summary(death.ts)
+
+plot(death.ts,
+     main="Monthly Accidental Deaths in USA (1973-1978)",
+     xlab="Year",
+     ylab="Number of Accidental Deaths",
+     col="blue",
+     lwd=2)
+
+abline(h=mean(death.ts), col="red", lty=6, lwd=3)
+
+
+## Q2: STATIONARITY TEST
+
+adf.original = adf.test(death.ts)
+print(adf.original)
+adf.original$p.value
+
+d = ndiffs(death.ts, test="adf")
+D = nsdiffs(death.ts)
+
+d
+D
+
+death.diff = if(D>0) {
+  diff(death.ts, lag=12, differences=D)
+} else {
+  death.ts
+}
+
+if(d>0) {
+  death.diff = diff(death.diff, differences=d)
+}
+
+adf.final = adf.test(death.diff)
+print(adf.final)
+
+
+## Q3: APPROPRIATE ARIMA MODEL SELECTION
+
+best.model = auto.arima(death.ts,
+                        seasonal=TRUE,
+                        stepwise=FALSE,
+                        approximation=FALSE,
+                        ic="aicc")
+
+print(best.model)
+summary(best.model)
+AIC(best.model)
+BIC(best.model)
+
+
+## Q4: MODEL FITTING AND INTERPRETATION
+
+fitted.values = fitted(best.model)
+
+head(cbind(Actual=as.numeric(death.ts),
+           Fitted=as.numeric(fitted.values)))
+
+model.residuals = residuals(best.model)
+summary(model.residuals)
+
+ord = arimaorder(best.model)
+fit.df = sum(ord[c("p","q","P","Q")])
+
+ljung.test = Box.test(model.residuals,
+                      lag=12,
+                      type="Ljung-Box",
+                      fitdf=fit.df)
+
+print(ljung.test)
+ljung.test$p.value
+```
+
+# Interpretation
+
+## Q1: Data Import and Time Series Plot
+
+> The monthly accidental deaths series from 1973 to 1978 shows noticeable fluctuations over time. The series also exhibits seasonal variation, indicating that the number of deaths may differ across months. The mean line represents the average number of accidental deaths during the period.
+
+---
+
+## Q2: Stationarity Test
+
+### Original ADF Test
+
+> The Augmented Dickey-Fuller test is used to check whether the series is stationary. If the p-value is greater than 0.05, we fail to reject the null hypothesis and conclude that the series is non-stationary.
+
+### Differencing
+
+> The values of `d` and `D` determine the required ordinary and seasonal differencing. Differencing is applied to remove trend and seasonal non-stationarity.
+
+### Final ADF Test
+
+> After differencing, the ADF test is performed again. If the p-value is less than 0.05, the differenced series is stationary.
+
+---
+
+## Q3: Appropriate ARIMA Model Selection
+
+> The `auto.arima()` function selects the appropriate seasonal ARIMA model based on the minimum AICc. A lower AICc indicates a better model among the candidate models. AIC and BIC are also used to evaluate model performance.
+
+**Exam-এ selected model যদি আসে, লিখবে:**
+
+> The selected model is **SARIMA(p,d,q)(P,D,Q)[12]**, which accounts for both non-seasonal and monthly seasonal dependence.
+
+---
+
+## Q4: Model Fitting and Interpretation
+
+### Fitted Values
+
+> The fitted values represent the values estimated by the selected ARIMA model. A good model should have fitted values that follow the actual series closely.
+
+### Residuals
+
+> The residuals are the differences between the actual and fitted values. Ideally, residuals should have mean close to zero and no systematic pattern.
+
+### Ljung-Box Test
+
+> If the Ljung-Box test gives a **p-value greater than 0.05**, we fail to reject the null hypothesis of no autocorrelation. Therefore, the residuals are approximately white noise and the fitted model is adequate.
+
+### Final Conclusion
+
+> The selected ARIMA model adequately represents the monthly accidental deaths series if the residuals are uncorrelated and behave approximately like white noise.

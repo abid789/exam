@@ -1,0 +1,32 @@
+Q1:
+(i)data<- read.table("deaths.txt")
+deaths.ts <- ts(data[,3],
+                start = c(1973,1),
+                frequency = 12)
+plot(deaths.ts)
+interpret:The time series plot of monthly accidental deaths in the USA from January 1973 to December 1978 shows noticeable monthly fluctuations with a clear seasonal pattern. The level of the series does not show a strong long-term increasing or decreasing trend. However, the number of accidental deaths varies systematically across different months of the year. Some irregular fluctuations are also present.
+
+Therefore, the main characteristics of the series are **seasonality and irregular variation, with no strong long-term trend**. The observed seasonal pattern suggests that a decomposition method can be used to separate the trend-cycle, seasonal, and irregular components.
+(ii)
+library(tseries)
+adf.test(deaths.ts)
+যদি p-value > 0.05 হয় → H₀ reject করতে পারব না → series non-stationary।
+
+deaths.diff <- diff(deaths.ts, lag = 12)
+adf.test(deaths.diff)
+(iii)
+library(forecast)
+model <- auto.arima(deaths.ts, seasonal = TRUE)
+model(optional , na dileo cholbe)
+must to write:
+Since the accidental deaths series is monthly and exhibits seasonal variation, a Seasonal ARIMA (SARIMA) model is appropriate for the analysis.
+The general form of the model is [SARIMA(p,d,q)(P,D,Q)_{12}].where 12 is the seasonal period because the observations are monthly.
+(iv)
+summary(model)
+checkresiduals(model)
+interpret:The MA(1) coefficient of -0.4264 indicates that the previous period's random error has an effect on the current observation. The seasonal MA coefficient of -0.5584 indicates that the previous year's seasonal error also affects the current observation.
+
+The model has (\sigma^2=102999), log-likelihood = -425.53, AIC = 857.06, AICc = 857.50 and BIC = 863.30. The training-set MAPE is 2.35%, indicating a relatively small average percentage error.
+
+The adequacy of the model was checked using the Ljung–Box test. The test gives (Q^*=13.184), with 12 degrees of freedom and a p-value of 0.3558. Since (p>0.05), the null hypothesis of no significant autocorrelation in the residuals is not rejected. Therefore, the residuals are approximately white noise.
+

@@ -1,0 +1,128 @@
+##1(i)
+# Read data
+data <- read.table("djao2.txt", header = FALSE)
+# Replace observations (Example: roll last two digits = 36)
+data[1,2] <- 1936.50
+data[nrow(data),2] <- 2036.20
+# Create time series
+dow.ts <- ts(data$V1)
+aus.ts <- ts(data$V2)
+# Plot both series
+par(mfrow = c(2,1))
+plot(dow.ts,
+     type = "l",
+     col = "blue",
+     main = "Dow-Jones Industrial Index",
+     xlab = "Trading Days",
+     ylab = "Index")
+plot(aus.ts,
+     type = "l",
+     col = "red",
+     main = "Australian All-Ordinaries Index",
+     xlab = "Trading Days",
+     ylab = "Index")
+
+par(mfrow = c(1,1))
+
+##(ii)
+# Load package
+library(tseries)
+
+# Augmented Dickey-Fuller (ADF) Test
+adf.test(dow.ts)
+adf.test(aus.ts)
+
+###iii
+
+dow.diff <- diff(dow.ts)
+aus.diff <- diff(aus.ts)
+
+# Plot differenced series
+plot(dow.diff, type="l", main="Differenced Dow-Jones")
+plot(aus.diff, type="l", main="Differenced Australian Index")
+
+# ADF Test after differencing
+adf.test(dow.diff)
+adf.test(aus.diff)
+
+##iv
+library(forecast)
+
+# ACF and PACF
+par(mfrow=c(2,2))
+
+acf(dow.diff, main="ACF of Dow-Jones")
+pacf(dow.diff, main="PACF of Dow-Jones")
+
+acf(aus.diff, main="ACF of Australian Index")
+pacf(aus.diff, main="PACF of Australian Index")
+
+par(mfrow=c(1,1))
+
+# Fit ARIMA models
+fit1 <- auto.arima(dow.ts)
+summary(fit1)
+
+fit2 <- auto.arima(aus.ts)
+summary(fit2)
+auto.arima() ব্যবহার করতে না দেন, তাহলে ACF/PACF দেখে যে order নির্বাচন করবে, সেটি দিয়ে arima() ব্যবহার করবে। যেমন:
+
+fit1 <- arima(dow.ts, order=c(1,1,1))
+summary(fit1)
+
+fit2 <- arima(aus.ts, order=c(1,1,1))
+summary(fit2)
+
+###v
+library(forecast)
+
+# Diagnostic checking for Dow-Jones model
+checkresiduals(fit1)
+
+# Diagnostic checking for Australian model
+checkresiduals(fit2)
+
+# Ljung-Box Test
+Box.test(residuals(fit1), lag = 20, type = "Ljung-Box")
+
+Box.test(residuals(fit2), lag = 20, type = "Ljung-Box")
+
+####2(i)
+
+# Simulate ARMA(2,2) process
+set.seed(123)
+
+x <- arima.sim(n = 200,
+               model = list(ar = c(-0.6, 0.3),
+                            ma = c(0.5, 0.2)))
+
+# Plot the simulated series
+plot.ts(x,
+        main = "Simulated ARMA(2,2)",
+        ylab = "Value")
+
+# Estimate the ARMA(2,2) model
+fit <- arima(x, order = c(2,0,2))
+
+# Display estimated coefficients
+fit
+summary(fit)
+##ii
+# Residual plot
+plot(residuals(fit),
+     type = "l",
+     main = "Residual Plot",
+     ylab = "Residuals")
+
+# ACF of residuals
+acf(residuals(fit),
+    main = "ACF of Residuals")
+
+# Ljung-Box test
+Box.test(residuals(fit),
+         lag = 20,
+         type = "Ljung-Box")
+
+# Diagnostic checking
+library(forecast)
+checkresiduals(fit)

@@ -1,0 +1,225 @@
+library(forecast)
+library(tseries)
+
+## Q1: DATA IMPORT
+
+imports_data = read.table("D:/SDS/3RD YEAR/time data/imports.txt")
+gnp_data = read.table("D:/SDS/3RD YEAR/time data/gnfp.txt")
+
+imports = as.numeric(imports_data[[ncol(imports_data)]])
+gnp = as.numeric(gnp_data[[ncol(gnp_data)]])
+
+imports[1] = 2711
+imports[length(imports)] = 13717
+
+gnp[1] = 18710
+gnp[length(gnp)] = 65715
+
+imports_ts = ts(imports, start=c(1959,3), frequency=4)
+gnp_ts = ts(gnp, start=c(1959,3), frequency=4)
+
+
+## Q1(i): TIME SERIES PLOTS & COMPARATIVE ANALYSIS
+
+par(mfrow=c(2,1))
+plot(imports_ts, type="l", main="Australian Imports",
+     xlab="Year", ylab="Imports")
+plot(gnp_ts, type="l", main="Australian GNP",
+     xlab="Year", ylab="GNP")
+par(mfrow=c(1,1))
+
+ggseasonplot(imports_ts, year.labels=TRUE) +
+  ggtitle("Seasonal Plot: Imports")
+
+ggseasonplot(gnp_ts, year.labels=TRUE) +
+  ggtitle("Seasonal Plot: GNP")
+
+
+## Q1(ii): STATIONARITY TEST - ADF
+
+adf.test(imports_ts)
+adf.test(gnp_ts)
+
+
+## Q1(iii): DECOMPOSITION & STATIONARY SERIES
+
+imports_stl = stl(imports_ts, s.window="periodic")
+gnp_stl = stl(gnp_ts, s.window="periodic")
+
+plot(imports_stl, main="STL Decomposition: Imports")
+plot(gnp_stl, main="STL Decomposition: GNP")
+
+imports_stat = imports_stl$time.series[,"remainder"]
+gnp_stat = gnp_stl$time.series[,"remainder"]
+
+par(mfrow=c(2,1))
+plot(imports_stat, type="l", main="Stationary Imports")
+plot(gnp_stat, type="l", main="Stationary GNP")
+par(mfrow=c(1,1))
+
+adf.test(imports_stat)
+adf.test(gnp_stat)
+
+
+## Q1(iv): SMOOTHING
+
+imports_ma = ma(imports_ts, order=4, centre=TRUE)
+gnp_ma = ma(gnp_ts, order=4, centre=TRUE)
+
+par(mfrow=c(2,1))
+plot(imports_ts, main="Imports: Moving Average")
+lines(imports_ma, lwd=2)
+plot(gnp_ts, main="GNP: Moving Average")
+lines(gnp_ma, lwd=2)
+par(mfrow=c(1,1))
+
+imports_hw = HoltWinters(imports_ts)
+gnp_hw = HoltWinters(gnp_ts)
+
+plot(imports_hw, main="Holt-Winters: Imports")
+plot(gnp_hw, main="Holt-Winters: GNP")
+
+imports_hw
+gnp_hw
+
+
+## Q1(v): TIME SERIES MODEL & FORECAST
+
+imports_model = auto.arima(imports_ts, seasonal=TRUE,
+                            stepwise=FALSE, approximation=FALSE)
+
+gnp_model = auto.arima(gnp_ts, seasonal=TRUE,
+                       stepwise=FALSE, approximation=FALSE)
+
+summary(imports_model)
+summary(gnp_model)
+
+forecast(imports_model, h=8)
+forecast(gnp_model, h=8)
+
+plot(forecast(imports_model, h=8),
+     main="Imports Forecast: Next 8 Quarters")
+
+plot(forecast(gnp_model, h=8),
+     main="GNP Forecast: Next 8 Quarters")
+
+
+## Q1(vi): MODEL DIAGNOSTICS & RESIDUAL ANALYSIS
+
+checkresiduals(imports_model)
+checkresiduals(gnp_model)
+
+shapiro.test(residuals(imports_model))
+shapiro.test(residuals(gnp_model))
+
+
+## Q2: SIMULATION OF CAUSAL ARMA(2,1)
+
+set.seed(71)
+
+x = arima.sim(
+  model=list(ar=c(-0.65,-0.20), ma=1.25),
+  n=10000
+)
+
+plot(x, type="l",
+     main="Simulated Causal ARMA(2,1)",
+     xlab="Time", ylab="X")
+
+
+## Q2(i): UNIT ROOT TESTS
+
+adf = adf.test(x)
+pp = pp.test(x)
+kpss = kpss.test(x, null="Level")
+
+adf
+pp
+kpss
+
+
+## Q2(ii): SUMMARY OF TEST RESULTS
+
+data.frame(
+  Test=c("ADF","PP","KPSS"),
+  Statistic=c(adf$statistic, pp$statistic, kpss$statistic),
+  P_value=c(adf$p.value, pp$p.value, kpss$p.value)
+)
+
+
+## Q2(iii): REMOVE UNIT ROOT IF PRESENT
+
+if(adf$p.value >= 0.05){
+  x_diff = diff(x)
+  plot(x_diff, type="l",
+       main="First Differenced Series")
+} else {
+  cat("No unit root. Differencing is not required.")
+}
+
+
+
+############3interpretation############
+
+অবশ্যই—**exam-এ লেখার মতো short version**:
+
+## Q1(i): Time Series Plot & Comparative Analysis
+
+**Imports:**  
+> The series shows an upward trend with clear quarterly seasonality and irregular fluctuations. Hence, it appears non-stationary.
+
+**GNP:**  
+> The series also shows an upward trend and quarterly seasonal pattern. Therefore, it appears non-stationary.
+
+**Comparison:**  
+> Both series have similar trend and seasonal behavior, but their fluctuation patterns differ.
+
+---
+
+## Q1(ii): ADF Test
+
+> If **p-value < 0.05**, reject H₀ and conclude that the series is stationary.  
+> If **p-value > 0.05**, fail to reject H₀ and conclude that the series is non-stationary.
+
+---
+
+## Q1(iii): STL Decomposition
+
+> STL decomposition separates the series into **trend, seasonal and remainder components**. After removing trend and seasonality, the remainder is approximately stationary if its ADF p-value is less than 0.05.
+
+---
+
+## Q1(iv): Smoothing
+
+> The 4-quarter moving average reduces short-term fluctuations and shows the underlying trend. Holt-Winters smoothing captures **level, trend and seasonal effects** and is suitable for these quarterly series.
+
+---
+
+## Q1(v): ARIMA Model
+
+> An appropriate seasonal ARIMA model is fitted using `auto.arima()`. The model captures the dependence and seasonal pattern and is used to forecast the next 8 quarters.
+
+---
+
+## Q1(vi): Model Diagnostics
+
+> A good model should have residuals randomly distributed around zero with no significant autocorrelation. If the Ljung-Box **p-value > 0.05**, the model is considered adequate.
+
+---
+
+# Q2(i): Unit Root Tests
+
+> ADF and PP have **unit root as H₀**, while KPSS has **stationarity as H₀**.  
+> ADF/PP p-value < 0.05 and KPSS p-value > 0.05 indicate stationarity.
+
+---
+
+## Q2(ii): Comparison
+
+> If ADF and PP reject the unit-root hypothesis and KPSS supports stationarity, the series is **stationary**. Thus, all three tests give consistent evidence.
+
+---
+
+## Q2(iii): Remove Unit Root
+
+> If a unit root is present, first differencing is applied to make the series stationary. For the given causal ARMA(2,1) process, the series is theoretically stationary, so **differencing is not required**.

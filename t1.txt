@@ -1,0 +1,36 @@
+# Q1 (i): Time Series Plot
+library(forecast)
+library(seasonal)
+imports_data = read.table("imports.txt")
+imports = imports_data[,1]
+imports[length(imports)] = 13471
+imports.ts = ts(imports, start = c(1959,3), frequency = 4)
+plot(imports.ts, type = "l", main = "Australian Imports of All Goods and Services", xlab = "Year", ylab = "Imports")
+
+# Q1 (ii): Classical Decomposition
+classical = decompose(imports.ts, type = "multiplicative")
+plot(classical)
+
+# Q1 (ii): SEATS Decomposition
+seats.model = seas(imports.ts)
+plot(seats.model)
+
+# Q1 (ii): STL Decomposition
+stl.model = stl(imports.ts, s.window = "periodic", robust = TRUE)
+plot(stl.model)
+
+# Q1 (ii): X11 Decomposition
+x11.model = seas(imports.ts, x11 = "")
+plot(x11.model)
+
+# Q1 (iii): Compare Seasonal Components
+classical.seasonal = classical$seasonal
+seats.seasonal = series(seats.model, "seasonal")
+stl.seasonal = stl.model$time.series[, "seasonal"]
+x11.seasonal = series(x11.model, "seasonal")
+par(mfrow = c(2,2))
+plot(classical.seasonal, main = "Classical Decomposition", ylab = "Seasonal")
+plot(seats.seasonal, main = "SEATS Decomposition", ylab = "Seasonal")
+plot(stl.seasonal, main = "STL Decomposition", ylab = "Seasonal")
+plot(x11.seasonal, main = "X11 Decomposition", ylab = "Seasonal")
+par(mfrow = c(1,1))

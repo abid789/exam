@@ -1,0 +1,84 @@
+##tutorial 51
+library(forecast)
+
+# Read data
+data <- read.table("airpass.txt",header=FALSE)
+
+# Replace last observation
+data[nrow(data),1] <- 436     # Replace with your roll
+
+# Create TS object
+air.ts <- ts(data$V1,
+             start=c(1949,1),
+             frequency=12)
+####i
+# Plot
+plot(air.ts,
+     type="l",
+     col="blue",
+     main="AirPassengers",
+     xlab="Year",
+     ylab="Passengers")
+###ii
+# Multiplicative decomposition
+dec <- decompose(air.ts, type="multiplicative")
+plot(dec)
+# STL decomposition
+stl.fit <- stl(log(air.ts), s.window="periodic")
+plot(stl.fit)
+####iii
+# Fit SARIMA
+fit <- Arima(log(air.ts),
+             order=c(0,1,1),
+             seasonal=c(0,1,1))
+
+summary(fit)
+#####iv
+# Residual checking
+checkresiduals(fit)
+
+Box.test(residuals(fit),
+         lag=20,
+         type="Ljung")
+
+##Q2(i)
+# Simulate ARMA(2,2)
+
+set.seed(123)
+
+x <- arima.sim(n = 200,
+               model = list(ar = c(-0.6, 0.3),
+                            ma = c(0.5, 0.2)))
+
+# Plot simulated series
+plot.ts(x,
+        col = "blue",
+        main = "Simulated ARMA(2,2)",
+        ylab = "Value")
+
+# Estimate the model
+fit <- arima(x,
+             order = c(2,0,2))
+
+# Display results
+summary(fit)
+fit
+###ii
+ts.plot(residuals(fit),
+        col = "red",
+        main = "Residual Plot")
+acf(residuals(fit))
+Box.test(residuals(fit),
+         lag = 20,
+         type = "Ljung-Box")
+####airpass ke wine er moto 3column
+# Read original data
+data1 <- read.table("airpass.txt", header = FALSE)
+
+# Create Year and Month columns
+Year <- rep(1949:1960, each = 12)
+Month <- rep(1:12, times = 12)
+
+# Combine into a new data frame
+airpass <- data.frame(Year, Month, Passengers = data1$V1)
+
